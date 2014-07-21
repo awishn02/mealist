@@ -1,0 +1,14 @@
+{% if recipe %}
+  <h1>{{ recipe.title }}</h1>
+  <h3>Calories: {{ recipe.calories }}</h3>
+  <ul>
+    {% for ingredient in recipe.recipe_ingredient_set.all %}
+      <li>{{ ingredient.amount}} {{ ingredient.ingredient }}</li>
+    {% endfor %}
+  </ul>
+  <ul>
+    {% for direction in recipe.direction_set.all %}
+      <li>{{ direction.text }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}

@@ -1,0 +1,94 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <link href="{%static 'Gumby/css/gumby.css'%}" rel="stylesheet" media="screen">
+    <script src="{%static 'Gumby/js/libs/modernizr-2.6.2.min.js' %}"></script>
+  </head>
+  <body>
+    <div class="row header">
+      <div class="two columns">
+        <img src="{% static 'images/logo_white.png' %}" alt="logo"/>
+      </div>
+    </div>
+    <div class="row home background parallax" gumby-parallax="0.1">
+      <div class="row overlay">
+        <div class="push_three six columns content">
+        </div>
+        <div class="push_two eight columns">
+          <h1>Groceries. Simplified.</h1>
+        </div>
+        <div class="push_two eight columns">
+          <h3>
+            Have your meals laid out for you every week and have a shopping list made 
+            based on those meals.
+          </h3>
+        </div>
+        <div class="push_four four columns">
+          <div id="learn">
+            <a>Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row info">
+      <div class="four columns">
+        <img src="{% static 'icons/svg/person.svg' %}" alt="icon person" id="person" class="svg"/>
+        <div class="svg-info">
+          Create a profile and add your preferences for information like 
+          budget, allergies, desired cooking time and many others! Mealist will 
+          then cater each week's menu based on these preferences.
+        </div>
+      </div>
+      <div class="four columns">
+        <img src="{% static 'icons/svg/list.svg' %}" alt="icon person" id="list" class="svg"/>
+        <div class="svg-info">
+          Every week you will get a new shopping list with a list of ingredients 
+          for that week's menu. Keep track of your inventory and Mealist will only
+          add items that you need.
+        </div>
+      </div>
+      <div class="four columns">
+        <img src="{% static 'icons/svg/heart.svg' %}" alt="icon person" id="heart" class="svg"/>
+        <div class="svg-info">
+          If you are concerned with health then Mealist will only select recipes 
+          that are nutritious!
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="{%static 'vendors/jquery.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'Gumby/gumby.min.js'%}"></script>
+    <script type="text/javascript" src="{%static 'Gumby/bower_components/gumby-parallax/gumby.parallax.js'%}"></script>
+    <script type="text/javascript">
+      jQuery('img.svg').each(function(){
+            var $img = jQuery(this);
+            var imgID = $img.attr('id');
+            var imgClass = $img.attr('class');
+            var imgURL = $img.attr('src');
+
+            jQuery.get(imgURL, function(data) {
+                // Get the SVG tag, ignore the rest
+                var $svg = jQuery(data).find('svg');
+
+                // Add replaced image's ID to the new SVG
+                if(typeof imgID !== 'undefined') {
+                    $svg = $svg.attr('id', imgID);
+                }
+                // Add replaced image's classes to the new SVG
+                if(typeof imgClass !== 'undefined') {
+                    $svg = $svg.attr('class', imgClass+' replaced-svg');
+                }
+
+                // Remove any invalid XML tags as per http://validator.w3.org
+                $svg = $svg.removeAttr('xmlns:a');
+
+                // Replace image with new SVG
+                $img.replaceWith($svg);
+
+                $svg.height(100);
+
+            }, 'xml');
+
+        });
+    </script>
+  </body>
+</html>
